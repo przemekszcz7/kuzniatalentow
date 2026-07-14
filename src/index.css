@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Fira+Code:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-mono: "Fira Code", monospace;
+
+  --color-brand-dark: #070008;
+  --color-brand-gold: #d3b16d;
+  --color-brand-gold-dark: #b89552;
+  --color-brand-gold-light: #f4edd8;
+  --color-brand-white: #ffffff;
+}
+
+/* Custom premium styles */
+html {
+  scroll-behavior: smooth;
+  background-color: #ffffff;
+  color: #070008;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: #d3b16d;
+  color: #070008;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070008;
+}
+::-webkit-scrollbar-thumb {
+  background: #d3b16d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b89552;
+}
+
