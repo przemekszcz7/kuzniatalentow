@@ -33,25 +33,62 @@ export default function Header({ onOpenBookingModal }: HeaderProps) {
     { name: 'Oferta', href: '#oferta' },
     { name: 'Projekt', href: '#projekt' },
     { name: 'Dlaczego my', href: '#dlaczego' },
-    { name: 'Aktualności', href: '#aktualnosci' },
     { name: 'Kontakt', href: '#kontakt' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      const offset = 80; // height of the header
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
 
+    const isMobile = window.innerWidth < 1024; // lg breakpoint in tailwind is 1024px
+
+    if (href === '#') {
+      setIsMobileMenuOpen(false);
       window.scrollTo({
-        top: offsetPosition,
+        top: 0,
         behavior: 'smooth'
       });
+      return;
+    }
+
+    if (isMobile) {
+      // Close the mobile menu first so its collapse doesn't disrupt/cancel the smooth scroll
+      setIsMobileMenuOpen(false);
+
+      // Perform the scroll after the menu closing transition has completed (approx 300ms)
+      setTimeout(() => {
+        try {
+          const element = document.querySelector(href);
+          if (element) {
+            const offset = 80; // height of the header
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        } catch (err) {
+          console.error('Error finding element to scroll to:', err);
+        }
+      }, 320);
+    } else {
+      // Desktop: scroll immediately
+      try {
+        const element = document.querySelector(href);
+        if (element) {
+          const offset = 80; // height of the header
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      } catch (err) {
+        console.error('Error finding element to scroll to:', err);
+      }
     }
   };
 
